@@ -1,9 +1,9 @@
 version: '3'
 services:
-  php:
-    build: build/php
-    image: test-php:dev
-    container_name: test-php
+  app:
+    build: build/app
+    image: test-app:dev
+    container_name: test-app
     tty: true
     ports:
       - '8080:80'
