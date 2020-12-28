@@ -1,0 +1,12 @@
+version: '3'
+services:
+  php:
+    build: build/php
+    image: test-php:dev
+    container_name: test-php
+    tty: true
+    ports:
+      - '8080:80'
+    volumes:
+      - ./:/var/www/test:cached
+    command: /usr/sbin/httpd -DFOREGROUND
