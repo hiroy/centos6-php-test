@@ -8,18 +8,18 @@ RUN sed -i -e "s/^#baseurl=http:\/\/mirror.centos.org/baseurl=http:\/\/vault.cen
 RUN yum -y update && yum clean all
 
 RUN yum install -y epel-release
-RUN yum install -y glibc-common vim-enhanced
+RUN yum install -y glibc-common vim-enhanced tzdata
 
-RUN yum install -y tzdata \
-  && echo 'ZONE="Asia/Tokyo"' > /etc/sysconfig/clock \
+# timezone
+RUN echo 'ZONE="Asia/Tokyo"' > /etc/sysconfig/clock \
   && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 # install httpd and php
 RUN yum install -y httpd php php-cli php-common php-devel php-bcmath php-mbstring php-mcrypt php-pgsql php-pdo php-process php-soap php-xml php-xmlrpc php-pecl-ssh2 php-pecl-xdebug
 
 # conf files
-COPY php.ini /etc/php.ini
-COPY test.conf /etc/httpd/conf.d/test.conf
+COPY php.ini /etc/
+COPY test.conf /etc/httpd/conf.d/
 
 # install postgresql
 RUN yum install -y postgresql postgresql-server
@@ -27,7 +27,7 @@ RUN service postgresql initdb
 
 # init
 ENV PGDATA /var/lib/pgsql/data
-COPY --chown=postgres:postgres pg_init.sh /usr/local/bin/pg_init.sh
+COPY --chown=postgres:postgres pg_init.sh /usr/local/bin/
 RUN chmod 755 /usr/local/bin/pg_init.sh
 RUN su - postgres /usr/local/bin/pg_init.sh
 
