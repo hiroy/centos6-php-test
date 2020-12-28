@@ -9,4 +9,4 @@ services:
       - '8080:80'
     volumes:
       - ./:/var/www/test:cached
-    command: /usr/sbin/httpd -DFOREGROUND
+    command: apachectl -DFOREGROUND

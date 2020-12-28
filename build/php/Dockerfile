@@ -16,5 +16,3 @@ RUN yum install -y httpd php php-cli php-common php-devel php-bcmath php-mbstrin
 # conf files
 COPY php.ini /etc/php.ini
 COPY test.conf /etc/httpd/conf.d/test.conf
-
-CMD ["apachectl", "-D", "FOREGROUND"]
