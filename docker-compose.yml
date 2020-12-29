@@ -1,4 +1,12 @@
 version: '3'
+networks:
+  app_net:
+    name: app_net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.10.0/24
 services:
   app:
     build: build/app
@@ -9,5 +17,8 @@ services:
       - '8080:80'
     volumes:
       - ./:/var/www/test:cached
+    networks:
+      app_net:
+        ipv4_address: 172.25.10.60
     command:
       - /usr/local/bin/app_start.sh
