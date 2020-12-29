@@ -1,12 +1,7 @@
 version: '3'
 networks:
-  app_net:
-    name: app_net
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.25.10.0/24
+  shared-network:
+    external: true
 services:
   app:
     build: build/app
@@ -18,7 +13,7 @@ services:
     volumes:
       - ./:/var/www/test:cached
     networks:
-      app_net:
+      shared-network:
         ipv4_address: 172.25.10.60
     command:
       - /usr/local/bin/app_start.sh
