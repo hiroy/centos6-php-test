@@ -1,4 +1,4 @@
-FROM centos:6
+FROM centos:6.10
 
 # refer archived URL
 RUN sed -i -e "s/^mirrorlist=http:\/\/mirrorlist.centos.org/#mirrorlist=http:\/\/mirrorlist.centos.org/g" /etc/yum.repos.d/CentOS-Base.repo
@@ -8,7 +8,7 @@ RUN sed -i -e "s/^#baseurl=http:\/\/mirror.centos.org/baseurl=http:\/\/vault.cen
 RUN yum -y update && yum clean all
 
 RUN yum install -y epel-release
-RUN yum install -y glibc-common vim-enhanced tzdata
+RUN yum install -y glibc-common vim-enhanced tzdata bind-tools
 
 # timezone
 RUN echo 'ZONE="Asia/Tokyo"' > /etc/sysconfig/clock \
@@ -33,5 +33,6 @@ RUN su - postgres /usr/local/bin/pg_init.sh
 
 COPY app_start.sh /usr/local/bin/
 RUN chmod 755 /usr/local/bin/app_start.sh
+
 ENTRYPOINT []
 CMD ["app_start.sh"]
